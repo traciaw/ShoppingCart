@@ -1,0 +1,64 @@
+﻿ @using ShoppingCart.Data.ViewModel;
+@model ShoppingCartVM;
+@{
+    ViewData["Title"] = "CART";
+}
+
+<h1>Cart Summary</h1>
+<table border="1" width="100%">
+
+    <tr>
+        <td>
+            <table class="table table-hover" border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th><h3>Books</h3></th>
+                        <th><h2><small class="text-muted"><i class="bi bi-tags"></i></small></h2></th>
+                        <th><h2><small class="text-muted"><i class="bi bi-upc-scan">Code</i></small></h2></th>
+                        <th><h2><small class="text-muted"><i class="bi bi-currency-dollar"></i></small></h2></th>
+                        <th><h2><small class="text-muted">Qty</small></h2></th>
+                        <th><h3>subtotal</h3></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartLogic.ShoppingCartItems)
+                    {
+                        <tr>
+                            <td>@item.Product.ProductName</td>
+                            <td>@item.Product.Category</td>
+                            <td>@item.Product.ProductCode</td>
+                            <td>SGD @item.Product.Price.ToString("C")</td>
+                            <td>@item.Quantity</td>
+                            <!--Subtotal-->
+                            <td>@((item.Product.Price * item.Quantity).ToString("C"))</td>
+
+                            <td>
+                                <a class="nav-link text-info" asp-controller="Orders" asp-action="AddToCart" asp-route-ProductID="@item.Product.ProductID">
+                                    <i class="bi bi-plus-square">Add</i></a>
+                                
+                            </td>
+                            <td>
+                                <a class="nav-link text-info" asp-controller="Orders" asp-action="RemoveFromCart" asp-route-ProductID="@item.Product.ProductID">
+                                    <i class="bi bi-dash-square">Remove</i></a>
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <!--Total-->
+                    <tr>
+                        <td>Your Total</td>
+                        <td>@Model.CartTotal.ToString("C")</td>
+                    </tr>
+                    <!--Checkout-->
+                </tfoot>
+            </table>
+            <!--Shop More-->
+            <br />
+            <a class="nav-link text-primary" asp-controller="Products" asp-action="Index"><h4>Shop More!</h4></a>
+        </td>
+    </tr>
+
+</table>

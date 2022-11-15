@@ -1,0 +1,44 @@
+﻿@using ShoppingCart.Controllers;
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Products</h1>
+<!--TODO: change to carousel view-->
+<table border="1" width="100%">
+
+    <tr>
+        <td>
+            <table class="table table-hover" border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th><h3>Title</h3></th>
+                        <th><h3>Id</h3></th>
+                        <th><h2><small class="text-muted"><i class="bi bi-tags"></i></small></h2></th>
+                        <th><h2><small class="text-muted"><i class="bi bi-upc-scan">Code</i></small></h2></th>
+                        <th><h2><small class="text-muted">In Stock</small></h2></th><!--To remove?-->
+                        <th><h2><small class="text-muted"><i class="bi bi-coin"></i></small></h2></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductID</td>
+                        <td>@item.Category</td>
+                        <td>@item.ProductCode</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price.ToString("C")</td>
+                            <td><a class="btn btn-outline-info" asp-controller="Orders" asp-action="AddToCart" asp-route-ProductID="@item.ProductID"><i class="bi bi-bag-plus-fill"></i></a></td>
+                    </tr>
+                    }
+                </tbody>
+
+            </table>
+        </td>
+    </tr>
+
+</table>
+
